@@ -3,28 +3,22 @@ const router = express.Router()
 const {
   checkIfSignUpBodyIsRight,
   checkIfEmailAlredyExists,
-  checkLoginBodyIsRight,
-  checkPassword
 } = require("../middlewares/user")
 const {
   signUserUp,
-  logUserIn
+  detailUser
 } = require("../controllers/user")
+const { checkToken } = require("../middlewares/authorization")
 
-router
+router.route("/")
   .post(
-    "/usuario",
     checkIfSignUpBodyIsRight,
     checkIfEmailAlredyExists,
     signUserUp
   )
-  .post(
-    "/login",
-    checkLoginBodyIsRight,
-    checkIfEmailAlredyExists,
-    checkPassword,
-    logUserIn
+  .get(
+    checkToken,
+    detailUser
   )
-
 
 module.exports = router

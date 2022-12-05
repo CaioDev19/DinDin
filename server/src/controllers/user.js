@@ -13,11 +13,15 @@ module.exports = {
     try {
       const hashedPassword = await bycript.hash(senha, 10)
 
-      const { rows } = await dataBase.query(`
+      const { rows, rowCount } = await dataBase.query(`
         INSERT INTO usuarios (nome, email, senha)
         VALUES ($1, $2, $3)
         RETURNING *;
       `, [nome, email, hashedPassword])
+
+      if (!rowCount) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor!' });
+      }
 
       const { senha: _, ...newUserData } = rows[0]
 
@@ -45,5 +49,10 @@ module.exports = {
       delete req.user
       res.status(500).json({ mensagem: "Erro interno do servidor" })
     }
+  },
+  detailUser(req, res) {
+    const userData = req.user
+    delete req.user
+    res.status(200).json(userData)
   }
 }
