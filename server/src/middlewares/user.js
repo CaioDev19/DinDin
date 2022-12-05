@@ -1,36 +1,69 @@
 const { isInTheUserDataBase } = require("../utils/user")
+const { checkIfFieldsWereSent } = require("../utils/body")
+const bycript = require("bcrypt")
 
 module.exports = {
-  checkIfFieldsWereSent(req, res, next) {
-    const {
-      nome,
-      email,
-      senha
-    } = req.body
+  checkIfSignUpBodyIsRight(req, res, next) {
+    const jsonResponse = checkIfFieldsWereSent(
+      req.body,
+      ["nome", "email", "senha"],
+      res
+    )
 
-    if (!nome) {
-      return res.status(400).json({ mensagem: "O nome é obrigatório" })
+    if (jsonResponse) {
+      return jsonResponse
     }
-    if (!email) {
-      return res.status(400).json({ mensagem: "O email é obrigatório" })
-    }
-    if (!senha) {
-      return res.status(400).json({ mensagem: "A senha é obrigatório" })
+
+    next()
+  },
+  checkLoginBodyIsRight(req, res, next) {
+    const jsonResponse = checkIfFieldsWereSent(
+      req.body,
+      ["email", "senha"],
+      res
+    )
+
+    if (jsonResponse) {
+      return jsonResponse
     }
 
     next()
   },
   async checkIfEmailAlredyExists(req, res, next) {
     const {
+      nome,
       email
     } = req.body
 
-    const { isInTheDataBase } = await isInTheUserDataBase("email", email, "usuarios")
+    const { isInTheDataBase, user } = await isInTheUserDataBase("email", email, "usuarios")
 
-    if (isInTheDataBase) {
-      return res.status(403).json({ mensagem: "Email inválido" })
+    if (nome) {
+      if (isInTheDataBase) {
+        return res.status(403).json({ mensagem: "Email inválido" })
+      }
+      next()
+    } else {
+      if (!isInTheDataBase) {
+        return res.status(403).json({ mensagem: "Email ou senha inválidos" })
+      }
+      req.user = user
+      next()
     }
+  },
+  async checkPassword(req, res, next) {
+    const {
+      senha
+    } = req.body
+    try {
+      const passwordCheck = await bycript.compare(senha, req.user.senha)
 
-    next()
+      if (!passwordCheck) {
+        return res.status(401).json({ mensagem: "Email ou senha inválidos" })
+      }
+
+      next()
+    } catch {
+      return res.status(500).json({ mensagem: "Erro interno do servidor" })
+    }
   }
 }
