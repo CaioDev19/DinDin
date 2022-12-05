@@ -28,7 +28,8 @@ module.exports = {
 
       const { senha: _, ...userData } = user
 
-      req.user = userData
+      req.loggedUser = userData
+
       next()
     } catch {
       return res.status(401).json({ mensagem: "Para acessar este recurso um token de autenticação válido deve ser enviado." })

@@ -29,7 +29,7 @@ module.exports = {
 
     next()
   },
-  async checkIfEmailAlredyExists(req, res, next) {
+  async checkIfEmailExists(req, res, next) {
     const {
       nome,
       email
@@ -37,18 +37,21 @@ module.exports = {
 
     const { isInTheDataBase, user } = await isInTheUserDataBase("email", email, "usuarios")
 
-    if (nome) {
+    if (nome && !req.loggedUser) {
       if (isInTheDataBase) {
-        return res.status(403).json({ mensagem: "Email inválido" })
+        return res.status(403).json({ mensagem: "O e-mail informado já está sendo utilizado por outro usuário." })
       }
-      next()
+    } else if (nome && req.loggedUser) {
+      if (isInTheDataBase && email !== req.loggedUser.email) {
+        return res.status(403).json({ mensagem: "O e-mail informado já está sendo utilizado por outro usuário." })
+      }
     } else {
       if (!isInTheDataBase) {
         return res.status(403).json({ mensagem: "Email ou senha inválidos" })
       }
       req.user = user
-      next()
     }
+    next()
   },
   async checkPassword(req, res, next) {
     const {

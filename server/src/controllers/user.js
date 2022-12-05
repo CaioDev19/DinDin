@@ -51,8 +51,35 @@ module.exports = {
     }
   },
   detailUser(req, res) {
-    const userData = req.user
-    delete req.user
+    const userData = req.loggedUser
+    delete req.loggedUser
     res.status(200).json(userData)
+  },
+  async updateUser(req, res) {
+    const {
+      nome,
+      email,
+      senha
+    } = req.body
+
+    try {
+      const hashedPassword = await bycript.hash(senha, 10)
+
+      const { rowCount } = await dataBase.query(`
+        UPDATE usuarios 
+        SET nome = $1, email = $2, senha = $3
+        WHERE id = $4
+      `, [nome, email, hashedPassword, req.loggedUser.id])
+
+      if (!rowCount) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor!' });
+      }
+
+      delete req.user
+      delete req.loggedUser
+      return res.status(204).send()
+    } catch (error) {
+      return res.status(500).json({ mensagem: "Erro interno do servidor" })
+    }
   }
 }

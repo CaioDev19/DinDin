@@ -2,23 +2,31 @@ const express = require("express")
 const router = express.Router()
 const {
   checkIfSignUpBodyIsRight,
-  checkIfEmailAlredyExists,
+  checkIfEmailExists,
 } = require("../middlewares/user")
 const {
   signUserUp,
-  detailUser
+  detailUser,
+  updateUser
 } = require("../controllers/user")
 const { checkToken } = require("../middlewares/authorization")
 
-router.route("/")
+router
   .post(
+    "/",
     checkIfSignUpBodyIsRight,
-    checkIfEmailAlredyExists,
+    checkIfEmailExists,
     signUserUp
   )
+  .use(checkToken)
+  .route("/")
   .get(
-    checkToken,
     detailUser
+  )
+  .put(
+    checkIfSignUpBodyIsRight,
+    checkIfEmailExists,
+    updateUser
   )
 
 module.exports = router
