@@ -47,10 +47,11 @@ module.exports = {
       }
     } else {
       if (!isInTheDataBase) {
-        return res.status(403).json({ mensagem: "Email ou senha inválidos" })
+        return res.status(401).json({ mensagem: "Email ou senha inválidos" })
       }
       req.user = user
     }
+
     next()
   },
   async checkPassword(req, res, next) {

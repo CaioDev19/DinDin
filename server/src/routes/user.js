@@ -11,15 +11,16 @@ const {
 } = require("../controllers/user")
 const { checkToken } = require("../middlewares/authorization")
 
-router
-  .post(
-    "/",
-    checkIfSignUpBodyIsRight,
-    checkIfEmailExists,
-    signUserUp
-  )
-  .use(checkToken)
-  .route("/")
+router.post(
+  "/",
+  checkIfSignUpBodyIsRight,
+  checkIfEmailExists,
+  signUserUp
+)
+
+router.use(checkToken)
+
+router.route("/")
   .get(
     detailUser
   )
