@@ -11,5 +11,5 @@ function checkIfFieldsWereSent(body, fields, res) {
 }
 
 module.exports = {
-  checkIfFieldsWereSent
+  checkIfFieldsWereSent,
 }

@@ -4,4 +4,4 @@ const router = express.Router()
 
 router.get("/", listAllCategories)
 
-module.exports = router 
+module.exports = router

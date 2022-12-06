@@ -30,20 +30,31 @@ module.exports = {
     next()
   },
   async checkIfEmailExists(req, res, next) {
-    const {
-      nome,
-      email
-    } = req.body
+    const { nome, email } = req.body
 
-    const { isInTheDataBase, user } = await isInTheUserDataBase("email", email, "usuarios")
+    const { isInTheDataBase, user } = await isInTheUserDataBase(
+      "email",
+      email,
+      "usuarios"
+    )
 
     if (nome && !req.loggedUser) {
       if (isInTheDataBase) {
-        return res.status(403).json({ mensagem: "O e-mail informado já está sendo utilizado por outro usuário." })
+        return res
+          .status(403)
+          .json({
+            mensagem:
+              "O e-mail informado já está sendo utilizado por outro usuário.",
+          })
       }
     } else if (nome && req.loggedUser) {
       if (isInTheDataBase && email !== req.loggedUser.email) {
-        return res.status(403).json({ mensagem: "O e-mail informado já está sendo utilizado por outro usuário." })
+        return res
+          .status(403)
+          .json({
+            mensagem:
+              "O e-mail informado já está sendo utilizado por outro usuário.",
+          })
       }
     } else {
       if (!isInTheDataBase) {
@@ -55,9 +66,7 @@ module.exports = {
     next()
   },
   async checkPassword(req, res, next) {
-    const {
-      senha
-    } = req.body
+    const { senha } = req.body
     try {
       const passwordCheck = await bycript.compare(senha, req.user.senha)
 
@@ -69,5 +78,5 @@ module.exports = {
     } catch {
       return res.status(500).json({ mensagem: "Erro interno do servidor" })
     }
-  }
+  },
 }

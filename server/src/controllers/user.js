@@ -4,23 +4,22 @@ const { signJwt } = require("../utils/jwt")
 
 module.exports = {
   async signUserUp(req, res) {
-    const {
-      nome,
-      email,
-      senha
-    } = req.body
+    const { nome, email, senha } = req.body
 
     try {
       const hashedPassword = await bycript.hash(senha, 10)
 
-      const { rows, rowCount } = await dataBase.query(`
+      const { rows, rowCount } = await dataBase.query(
+        `
         INSERT INTO usuarios (nome, email, senha)
         VALUES ($1, $2, $3)
         RETURNING *;
-      `, [nome, email, hashedPassword])
+      `,
+        [nome, email, hashedPassword]
+      )
 
       if (!rowCount) {
-        return res.status(500).json({ mensagem: 'Erro interno do servidor!' });
+        return res.status(500).json({ mensagem: "Erro interno do servidor!" })
       }
 
       const { senha: _, ...newUserData } = rows[0]
@@ -43,7 +42,7 @@ module.exports = {
       delete req.user
       res.status(200).json({
         usuario: userData,
-        token
+        token,
       })
     } catch {
       delete req.user
@@ -56,30 +55,31 @@ module.exports = {
     res.status(200).json(userData)
   },
   async updateUser(req, res) {
-    const {
-      nome,
-      email,
-      senha
-    } = req.body
+    const { nome, email, senha } = req.body
 
     try {
       const hashedPassword = await bycript.hash(senha, 10)
 
-      const { rowCount } = await dataBase.query(`
+      const { rowCount } = await dataBase.query(
+        `
         UPDATE usuarios 
         SET nome = $1, email = $2, senha = $3
         WHERE id = $4
-      `, [nome, email, hashedPassword, req.loggedUser.id])
+      `,
+        [nome, email, hashedPassword, req.loggedUser.id]
+      )
 
       if (!rowCount) {
-        return res.status(500).json({ mensagem: 'Erro interno do servidor!' });
+        return res.status(500).json({ mensagem: "Erro interno do servidor!" })
       }
 
       delete req.user
       delete req.loggedUser
       return res.status(204).send()
     } catch (error) {
+      delete req.user
+      delete req.loggedUser
       return res.status(500).json({ mensagem: "Erro interno do servidor" })
     }
-  }
+  },
 }
