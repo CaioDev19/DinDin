@@ -11,6 +11,7 @@ module.exports = {
     )
 
     if (jsonResponse) {
+      delete req.loggedUser
       return jsonResponse
     }
 
@@ -39,6 +40,7 @@ module.exports = {
 
     if (nome && !req.loggedUser) {
       if (isInTheDataBase) {
+        delete req.loggedUser
         return res.status(403).json({
           mensagem:
             "O e-mail informado já está sendo utilizado por outro usuário.",
@@ -46,6 +48,7 @@ module.exports = {
       }
     } else if (nome && req.loggedUser) {
       if (isInTheDataBase && email !== req.loggedUser.email) {
+        delete req.loggedUser
         return res.status(403).json({
           mensagem:
             "O e-mail informado já está sendo utilizado por outro usuário.",
@@ -53,6 +56,7 @@ module.exports = {
       }
     } else {
       if (!isInTheDataBase) {
+        delete req.loggedUser
         return res.status(401).json({ mensagem: "Email ou senha inválidos" })
       }
       req.user = user

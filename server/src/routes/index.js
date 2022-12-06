@@ -3,6 +3,7 @@ const router = express.Router()
 const userRouter = require("./user")
 const loginRouter = require("./login")
 const categoriesRouter = require("./categories")
+const transactionsRouter = require("./transactions")
 const { checkToken } = require("../middlewares/authorization")
 
 router
@@ -10,5 +11,6 @@ router
   .use("/login", loginRouter)
   .use(checkToken)
   .use("/categoria", categoriesRouter)
+  .use("/transacao", transactionsRouter)
 
 module.exports = router
