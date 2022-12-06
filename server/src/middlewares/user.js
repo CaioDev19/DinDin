@@ -33,28 +33,23 @@ module.exports = {
     const { nome, email } = req.body
 
     const { isInTheDataBase, user } = await isInTheUserDataBase(
-      "email",
-      email,
+      { email },
       "usuarios"
     )
 
     if (nome && !req.loggedUser) {
       if (isInTheDataBase) {
-        return res
-          .status(403)
-          .json({
-            mensagem:
-              "O e-mail informado já está sendo utilizado por outro usuário.",
-          })
+        return res.status(403).json({
+          mensagem:
+            "O e-mail informado já está sendo utilizado por outro usuário.",
+        })
       }
     } else if (nome && req.loggedUser) {
       if (isInTheDataBase && email !== req.loggedUser.email) {
-        return res
-          .status(403)
-          .json({
-            mensagem:
-              "O e-mail informado já está sendo utilizado por outro usuário.",
-          })
+        return res.status(403).json({
+          mensagem:
+            "O e-mail informado já está sendo utilizado por outro usuário.",
+        })
       }
     } else {
       if (!isInTheDataBase) {

@@ -1,4 +1,4 @@
-const dataBase = require("../config/dataBase")
+const { knex } = require("../config/dataBase")
 const bycript = require("bcrypt")
 const { signJwt } = require("../utils/jwt")
 
@@ -9,20 +9,19 @@ module.exports = {
     try {
       const hashedPassword = await bycript.hash(senha, 10)
 
-      const { rows, rowCount } = await dataBase.query(
-        `
-        INSERT INTO usuarios (nome, email, senha)
-        VALUES ($1, $2, $3)
-        RETURNING *;
-      `,
-        [nome, email, hashedPassword]
-      )
+      const newUser = await knex("usuarios")
+        .insert({
+          nome,
+          email,
+          senha: hashedPassword,
+        })
+        .returning("*")
 
-      if (!rowCount) {
+      if (!newUser) {
         return res.status(500).json({ mensagem: "Erro interno do servidor!" })
       }
 
-      const { senha: _, ...newUserData } = rows[0]
+      const { senha: _, ...newUserData } = newUser[0]
 
       return res.status(201).json(newUserData)
     } catch (error) {
@@ -60,16 +59,15 @@ module.exports = {
     try {
       const hashedPassword = await bycript.hash(senha, 10)
 
-      const { rowCount } = await dataBase.query(
-        `
-        UPDATE usuarios 
-        SET nome = $1, email = $2, senha = $3
-        WHERE id = $4
-      `,
-        [nome, email, hashedPassword, req.loggedUser.id]
-      )
+      const response = await knex("usuarios")
+        .update({
+          nome,
+          email,
+          senha: hashedPassword,
+        })
+        .where({ id: req.loggedUser.id })
 
-      if (!rowCount) {
+      if (!response) {
         return res.status(500).json({ mensagem: "Erro interno do servidor!" })
       }
 

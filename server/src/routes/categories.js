@@ -1,5 +1,5 @@
 const express = require("express")
-const { listAllCategories } = require("../middlewares/categories")
+const { listAllCategories } = require("../controllers/categories")
 const router = express.Router()
 
 router.get("/", listAllCategories)

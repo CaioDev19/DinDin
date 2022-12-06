@@ -17,15 +17,13 @@ module.exports = {
         return res.status(500).json({ mensagem: "Erro interno do servidor" })
       }
 
-      const { user } = await isInTheUserDataBase("id", payLoad.id, "usuarios")
+      const { user } = await isInTheUserDataBase({ id: payLoad.id }, "usuarios")
 
       if (!user) {
-        return res
-          .status(401)
-          .json({
-            mensagem:
-              "Para acessar este recurso um token de autenticação válido deve ser enviado.",
-          })
+        return res.status(401).json({
+          mensagem:
+            "Para acessar este recurso um token de autenticação válido deve ser enviado.",
+        })
       }
 
       const { senha: _, ...userData } = user
@@ -34,12 +32,10 @@ module.exports = {
 
       next()
     } catch {
-      return res
-        .status(401)
-        .json({
-          mensagem:
-            "Para acessar este recurso um token de autenticação válido deve ser enviado.",
-        })
+      return res.status(401).json({
+        mensagem:
+          "Para acessar este recurso um token de autenticação válido deve ser enviado.",
+      })
     }
   },
 }

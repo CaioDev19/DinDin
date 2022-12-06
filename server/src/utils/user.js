@@ -1,22 +1,14 @@
-const dataBase = require("../config/dataBase")
+const { knex } = require("../config/dataBase")
 
 module.exports = {
-  async isInTheUserDataBase(column, data, table) {
+  async isInTheUserDataBase(data, table) {
     try {
-      const queryRes = await dataBase.query(
-        `
-            SELECT *
-            FROM ${table}
-            WHERE ${column} = $1
-            ORDER BY id DESC;
-        `,
-        [data]
-      )
+      const queryRes = await knex(table).where(data)
 
-      if (queryRes.rowCount > 0) {
+      if (queryRes.length > 0) {
         return {
           isInTheDataBase: true,
-          user: queryRes.rows[0],
+          user: queryRes[0],
         }
       }
 
