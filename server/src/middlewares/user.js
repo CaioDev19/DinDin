@@ -1,4 +1,4 @@
-const { isInTheUserDataBase } = require("../utils/user")
+const { isInTheDataBase } = require("../utils/db")
 const { checkIfFieldsWereSent } = require("../utils/body")
 const bycript = require("bcrypt")
 
@@ -33,13 +33,10 @@ module.exports = {
   async checkIfEmailExists(req, res, next) {
     const { nome, email } = req.body
 
-    const { isInTheDataBase, user } = await isInTheUserDataBase(
-      { email },
-      "usuarios"
-    )
+    const { response, data } = await isInTheDataBase({ email }, "usuarios")
 
     if (nome && !req.loggedUser) {
-      if (isInTheDataBase) {
+      if (response) {
         delete req.loggedUser
         return res.status(403).json({
           mensagem:
@@ -47,7 +44,7 @@ module.exports = {
         })
       }
     } else if (nome && req.loggedUser) {
-      if (isInTheDataBase && email !== req.loggedUser.email) {
+      if (response && email !== req.loggedUser.email) {
         delete req.loggedUser
         return res.status(403).json({
           mensagem:
@@ -55,11 +52,11 @@ module.exports = {
         })
       }
     } else {
-      if (!isInTheDataBase) {
+      if (!response) {
         delete req.loggedUser
         return res.status(401).json({ mensagem: "Email ou senha inválidos" })
       }
-      req.user = user
+      req.user = data
     }
 
     next()

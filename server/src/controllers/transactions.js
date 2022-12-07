@@ -39,7 +39,32 @@ module.exports = {
       res.status(200).json(transaction)
     } catch {
       delete req.loggedUser
-      res.status(500).json({ mensagem: "Erro interno do servidor" })
+      res.status(500).json({ mensagem: "Erro interno do servidor." })
+    }
+  },
+  async registerTransaction(req, res) {
+    const { descricao, valor, data, categoria_id, tipo } = req.body
+    try {
+      const newUser = await knex("transacoes")
+        .insert({
+          valor,
+          descricao,
+          data,
+          categoria_id,
+          tipo,
+          usuario_id: req.loggedUser.id,
+        })
+        .returning("*")
+
+      if (newUser.length === 0) {
+        delete req.loggedUser
+        return res.status(500).json({ mensagem: "Erro interno do servidor." })
+      }
+
+      res.status(201).json(newUser[0])
+    } catch {
+      delete req.loggedUser
+      res.status(500).json({ mensagem: "Erro interno do servidor." })
     }
   },
 }

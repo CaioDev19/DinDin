@@ -1,5 +1,5 @@
 const { verifyTokenJwt } = require("../utils/jwt")
-const { isInTheUserDataBase } = require("../utils/user")
+const { isInTheDataBase } = require("../utils/db")
 
 module.exports = {
   async checkToken(req, res, next) {
@@ -17,19 +17,19 @@ module.exports = {
         return res.status(500).json({ mensagem: "Erro interno do servidor" })
       }
 
-      const { user, isInTheDataBase } = await isInTheUserDataBase(
+      const { data, response } = await isInTheDataBase(
         { id: payLoad.id },
         "usuarios"
       )
 
-      if (!isInTheDataBase) {
+      if (!response) {
         return res.status(401).json({
           mensagem:
             "Para acessar este recurso um token de autenticação válido deve ser enviado.",
         })
       }
 
-      const { senha: _, ...userData } = user
+      const { senha: _, ...userData } = data
 
       req.loggedUser = userData
 

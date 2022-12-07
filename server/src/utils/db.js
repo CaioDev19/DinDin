@@ -1,23 +1,23 @@
 const { knex } = require("../config/dataBase")
 
 module.exports = {
-  async isInTheUserDataBase(data, table) {
+  async isInTheDataBase(data, table) {
     try {
       const queryRes = await knex(table).where(data)
 
       if (queryRes.length > 0) {
         return {
-          isInTheDataBase: true,
-          user: queryRes[0],
+          response: true,
+          data: queryRes[0],
         }
       }
 
       return {
-        isInTheDataBase: false,
+        response: false,
       }
     } catch (error) {
       return {
-        isInTheDataBase: false,
+        response: false,
       }
     }
   },
