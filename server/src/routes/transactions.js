@@ -24,7 +24,7 @@ router
     checkTypeOfRegister,
     registerTransaction
   )
-console.log("first commit")
+
 router
   .route("/:id")
   .get(
