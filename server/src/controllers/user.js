@@ -38,19 +38,16 @@ module.exports = {
         { expiresIn: "8h" }
       )
 
-      delete req.user
-      res.status(200).json({
+      return res.status(200).json({
         usuario: userData,
         token,
       })
     } catch {
-      delete req.user
-      res.status(500).json({ mensagem: "Erro interno do servidor" })
+      return res.status(500).json({ mensagem: "Erro interno do servidor" })
     }
   },
   detailUser(req, res) {
     const userData = req.loggedUser
-    delete req.loggedUser
     res.status(200).json(userData)
   },
   async updateUser(req, res) {
@@ -71,12 +68,8 @@ module.exports = {
         return res.status(500).json({ mensagem: "Erro interno do servidor!" })
       }
 
-      delete req.user
-      delete req.loggedUser
       return res.status(204).send()
     } catch (error) {
-      delete req.user
-      delete req.loggedUser
       return res.status(500).json({ mensagem: "Erro interno do servidor" })
     }
   },
