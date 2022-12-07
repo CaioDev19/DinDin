@@ -2,6 +2,23 @@ const { knex } = require("../config/dataBase")
 
 module.exports = {
   async listAllTransactions(req, res) {
+    const { filtro } = req.query
+
+    if (filtro) {
+      try {
+        const filteredTransactions = await knex("transacoes")
+          .join("categorias", "transacoes.categoria_id", "categorias.id")
+          .select("transacoes.*", "categorias.descricao  as categoria_nome")
+          .where("transacoes.usuario_id", req.loggedUser.id)
+          .whereIn("categorias.descricao", filtro)
+          .orderBy("transacoes.data", "asc")
+
+        return res.status(200).json(filteredTransactions)
+      } catch {
+        return res.status(500).json({ mensagem: "Erro interno do servidor" })
+      }
+    }
+
     try {
       const transactions = await knex("transacoes")
         .join("categorias", "transacoes.categoria_id", "categorias.id")
