@@ -5,6 +5,7 @@ const {
   registerTransaction,
   updateTransaction,
   deleteTransaction,
+  showBalance,
 } = require("../controllers/transactions")
 const {
   checkRegisterBody,
@@ -24,6 +25,8 @@ router
     checkTypeOfRegister,
     registerTransaction
   )
+
+router.get("/extrato", showBalance)
 
 router
   .route("/:id")

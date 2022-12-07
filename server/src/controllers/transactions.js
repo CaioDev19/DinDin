@@ -94,4 +94,41 @@ module.exports = {
       return res.status(500).json({ mensagem: "Erro interno do servidor." })
     }
   },
+  async showBalance(req, res) {
+    try {
+      const balance = await knex("transacoes")
+        .select("tipo")
+        .sum("valor as valor")
+        .where({ usuario_id: req.loggedUser.id })
+        .groupBy("tipo")
+
+      if (balance.length === 0) {
+        return res.status(200).json({
+          entrada: 0,
+          saida: 0,
+        })
+      } else if (balance.length === 1) {
+        if (balance[0].tipo === "entrada") {
+          return res.status(200).json({
+            entrada: balance[0].valor,
+            saida: 0,
+          })
+        } else {
+          return res.status(200).json({
+            entrada: 0,
+            saida: balance[0].valor,
+          })
+        }
+      } else if (balance.length === 2) {
+        return res.status(200).json({
+          entrada:
+            balance[0].tipo === "entrada" ? balance[0].valor : balance[1].valor,
+          saida:
+            balance[1].tipo === "saida" ? balance[1].valor : balance[0].valor,
+        })
+      }
+    } catch {
+      return res.status(500).json({ mensagem: "Erro interno do servidor." })
+    }
+  },
 }
