@@ -19,42 +19,21 @@ export function HeaderTable({ handleSort, isAsc }) {
             src={arrowUp}
             alt="Arrow up"
             animate={{ rotate: isAsc ? 180 : 0 }}
-
           />
         </Sc.DateItem>
-        <Sc.TableItemHeader
-          size="small"
-          weight="bold"
-          as="th"
-        >
+        <Sc.TableItemHeader size="small" weight="bold" as="th">
           Dia da semana
         </Sc.TableItemHeader>
-        <Sc.TableItemHeader
-          size="small"
-          weight="bold"
-          as="th"
-        >
+        <Sc.TableItemHeader size="small" weight="bold" as="th">
           Descrição
         </Sc.TableItemHeader>
-        <Sc.TableItemHeader
-          size="small"
-          weight="bold"
-          as="th"
-        >
+        <Sc.TableItemHeader size="small" weight="bold" as="th">
           Categoria
         </Sc.TableItemHeader>
-        <Sc.TableItemHeader
-          size="small"
-          weight="bold"
-          as="th"
-        >
+        <Sc.TableItemHeader size="small" weight="bold" as="th">
           Valor
         </Sc.TableItemHeader>
-        <Sc.TableItemHeader
-          size="small"
-          weight="bold"
-          as="th"
-        >
+        <Sc.TableItemHeader size="small" weight="bold" as="th">
           &nbsp;
         </Sc.TableItemHeader>
       </tr>

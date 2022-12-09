@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 
 function getLocalStorageValue(key, initialValue) {
   const localStorageValue = JSON.parse(localStorage.getItem(key))
@@ -7,7 +7,7 @@ function getLocalStorageValue(key, initialValue) {
     return localStorageValue
   }
 
-  if (typeof (initialValue) === "function") {
+  if (typeof initialValue === "function") {
     return initialValue()
   }
 

@@ -2,19 +2,13 @@ import { Controller } from "react-hook-form"
 import * as Sc from "./style"
 import { motion } from "framer-motion"
 
-export function Select({
-  control,
-  options,
-  name
-}) {
+export function Select({ control, options, name }) {
   return (
     <Controller
       name={name}
       control={control}
       defaultValue=""
-      render={({
-        field: { onChange, ref, name, value }
-      }) => {
+      render={({ field: { onChange, ref, name, value } }) => {
         return (
           <Sc.Select
             as={motion.select}
@@ -24,19 +18,16 @@ export function Select({
             ref={ref}
             name={name}
           >
-            <option value="" disabled >Escolha uma categoria</option>
-            {
-              options.map((option) => {
-                return (
-                  <option
-                    key={option.id}
-                    value={option.descricao}
-                  >
-                    {option.descricao}
-                  </option>
-                )
-              })
-            }
+            <option value="" disabled>
+              Escolha uma categoria
+            </option>
+            {options.map((option) => {
+              return (
+                <option key={option.id} value={option.descricao}>
+                  {option.descricao}
+                </option>
+              )
+            })}
           </Sc.Select>
         )
       }}

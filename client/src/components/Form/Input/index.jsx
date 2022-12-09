@@ -1,7 +1,7 @@
 import * as Sc from "./style"
-import { useState } from "react";
-import { Controller } from "react-hook-form";
-import { Label } from "../../../global/styles/Label";
+import { useState } from "react"
+import { Controller } from "react-hook-form"
+import { Label } from "../../../global/styles/Label"
 import eyeClosed from "../../../assets/images/eye-password-hide-svgrepo-com.svg"
 import eyeOpened from "../../../assets/images/eye-view-interface-symbol-svgrepo-com.svg"
 
@@ -23,9 +23,7 @@ export function Input({
       name={name}
       control={control}
       defaultValue=""
-      render={({
-        field: { onChange, value, ref, name },
-      }) => {
+      render={({ field: { onChange, value, ref, name } }) => {
         return (
           <Label
             labelColor={labelColor}
@@ -34,13 +32,8 @@ export function Input({
           >
             {label}
             <Sc.StyledInput
-              type={type === "password"
-                ? (
-                  isEyeOpened
-                    ? "text"
-                    : "password"
-                )
-                : type
+              type={
+                type === "password" ? (isEyeOpened ? "text" : "password") : type
               }
               className={className}
               placeholder={placeholder}
@@ -49,23 +42,16 @@ export function Input({
               ref={ref}
               name={name}
             />
-            {type === "password" &&
+            {type === "password" && (
               <Sc.EyeIcon
                 onClick={() => setIsEyeOpened((prev) => !prev)}
-                src={isEyeOpened
-                  ? eyeOpened
-                  : eyeClosed
-                }
-                alt={isEyeOpened
-                  ? "Olho aberto"
-                  : "Olho fechado"
-                }
+                src={isEyeOpened ? eyeOpened : eyeClosed}
+                alt={isEyeOpened ? "Olho aberto" : "Olho fechado"}
               />
-            }
+            )}
           </Label>
         )
       }}
-
     />
   )
 }

@@ -13,10 +13,10 @@ import "react-toastify/dist/ReactToastify.min.css"
 function App() {
   const client = new QueryClient()
   setLogger({
-    log: () => { },
-    warn: () => { },
-    error: () => { },
-  });
+    log: () => {},
+    warn: () => {},
+    error: () => {},
+  })
 
   return (
     <Router>
@@ -25,7 +25,7 @@ function App() {
           <ThemeProvider theme={theme}>
             <GlobalStyle />
             <MainRoutes />
-          </ ThemeProvider>
+          </ThemeProvider>
         </AuthProvider>
         <ToastContainer transition={Slide} autoClose={1000} />
       </QueryClientProvider>
@@ -33,4 +33,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

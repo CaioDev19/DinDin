@@ -18,7 +18,7 @@ export const theme = {
     GRAY: "#B9B9B9",
     GRAY_100: "#EAEAEA",
     GRAY_400: "#555555",
-    GRAY_500: "#484848"
+    GRAY_500: "#484848",
   },
   FONT_SIZE: {
     SMALL: "0.95rem",
@@ -32,6 +32,6 @@ export const theme = {
     SMALL: "0.9",
     MEDIUM: "1.8",
     LARGE: "3.2",
-    EXTRALARGE: "3"
-  }
+    EXTRALARGE: "3",
+  },
 }

@@ -6,20 +6,12 @@ export function CardAccountMovement({ entrada, saida, saldo }) {
   return (
     <Sc.Container>
       <Sc.SubContainerCard>
-        <Typography.SubTittle
-          weight="bold"
-          size="intermediate"
-          position="left"
-        >
+        <Typography.SubTittle weight="bold" size="intermediate" position="left">
           Resumo
         </Typography.SubTittle>
         <Sc.WrapperText>
           <Sc.SubContainerText>
-            <Typography.Text
-              as="span"
-              size="small"
-              weight="500"
-            >
+            <Typography.Text as="span" size="small" weight="500">
               Entradas
             </Typography.Text>
             <Typography.Text
@@ -33,11 +25,7 @@ export function CardAccountMovement({ entrada, saida, saldo }) {
             </Typography.Text>
           </Sc.SubContainerText>
           <Sc.SubContainerText>
-            <Typography.Text
-              as="span"
-              size="small"
-              weight="500"
-            >
+            <Typography.Text as="span" size="small" weight="500">
               Saídas
             </Typography.Text>
             <Typography.Text
@@ -53,10 +41,7 @@ export function CardAccountMovement({ entrada, saida, saldo }) {
         </Sc.WrapperText>
         <Sc.Line />
         <Sc.SubContainerText>
-          <Typography.Text
-            as="span"
-            weight="bold"
-          >
+          <Typography.Text as="span" weight="bold">
             Saldo
           </Typography.Text>
           <Typography.Text

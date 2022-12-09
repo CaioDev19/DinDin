@@ -7,7 +7,7 @@ export function DropDownFilters({
   filters,
   handleFilter,
   resetFilters,
-  applyFilters
+  applyFilters,
 }) {
   return (
     <Sc.ContainerCategories
@@ -18,12 +18,7 @@ export function DropDownFilters({
       transition={{ type: "spring", stiffness: "150", duration: "0.75" }}
     >
       <Sc.WrapperCategories>
-        <Text
-          as="h3"
-          color="gray"
-          size="small"
-          weight="400"
-        >
+        <Text as="h3" color="gray" size="small" weight="400">
           Categoria
         </Text>
         <Sc.Categories>
@@ -33,24 +28,16 @@ export function DropDownFilters({
                 <Sc.FilterButton
                   key={category.id}
                   letterColor={
-                    filters.includes(category.descricao)
-                      ? "white"
-                      : "black"
+                    filters.includes(category.descricao) ? "white" : "black"
                   }
                   background={
-                    filters.includes(category.descricao)
-                      ? "purple"
-                      : "white"
+                    filters.includes(category.descricao) ? "purple" : "white"
                   }
                   onClick={() => handleFilter(category)}
                 >
                   {category.descricao}
                   <span>
-                    {
-                      filters.includes(category.descricao)
-                        ? "x"
-                        : "+"
-                    }
+                    {filters.includes(category.descricao) ? "x" : "+"}
                   </span>
                 </Sc.FilterButton>
               )

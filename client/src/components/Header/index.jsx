@@ -12,29 +12,15 @@ export function Header({ userName, handleSignOut }) {
     <>
       <Sc.Banner>
         <Sc.WrapperUserInfo>
-          <Sc.UserImage
-            src={userImage}
-            onClick={() => setIsOpen(true)}
-          />
-          <Typography.Text
-            as="span"
-            size="small"
-            color="white"
-          >
+          <Sc.UserImage src={userImage} onClick={() => setIsOpen(true)} />
+          <Typography.Text as="span" size="small" color="white">
             {userName}
           </Typography.Text>
-          <Sc.LogOutImage
-            src={logOutImage}
-            onClick={handleSignOut}
-          />
+          <Sc.LogOutImage src={logOutImage} onClick={handleSignOut} />
         </Sc.WrapperUserInfo>
       </Sc.Banner>
       <AnimatePresence>
-        {isOpen &&
-          <ProfileModal
-            closeModal={() => setIsOpen(false)}
-          />
-        }
+        {isOpen && <ProfileModal closeModal={() => setIsOpen(false)} />}
       </AnimatePresence>
     </>
   )

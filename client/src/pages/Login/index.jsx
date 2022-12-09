@@ -25,16 +25,16 @@ export function Login() {
     },
     onError: (error) => {
       toast.error(error.response.data.mensagem)
-    }
+    },
   })
 
   const {
     handleSubmit,
     control,
     resetField,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    resolver: yupResolver(loginSchema)
+    resolver: yupResolver(loginSchema),
   })
 
   function handleData(data) {
@@ -44,7 +44,7 @@ export function Login() {
   function handleError(error) {
     if (error.email?.type === "email") {
       resetField("email", {
-        keepError: true
+        keepError: true,
       })
     }
   }
@@ -52,7 +52,6 @@ export function Login() {
   if (user?.token) {
     return <Navigate to="/main" />
   }
-
 
   return (
     <Sc.Wrapper
@@ -63,32 +62,27 @@ export function Login() {
       transition={{ delay: 0 }}
     >
       <Sc.LeftContent>
-        <Typography.Tittle
-          size="large"
-        >
-          Controle suas <Sc.PurpleTittle as="span" size="large">finanças</Sc.PurpleTittle>, sem planilha chata.
+        <Typography.Tittle size="large">
+          Controle suas{" "}
+          <Sc.PurpleTittle as="span" size="large">
+            finanças
+          </Sc.PurpleTittle>
+          , sem planilha chata.
         </Typography.Tittle>
         <Sc.Text>
-          Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você tem tudo num único lugar e em um clique de distância.
+          Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você tem
+          tudo num único lugar e em um clique de distância.
         </Sc.Text>
-        <Sc.Button
-          size="small"
-          onClick={() => navigate("/cadastro")}
-        >
+        <Sc.Button size="small" onClick={() => navigate("/cadastro")}>
           Cadastre-se
         </Sc.Button>
       </Sc.LeftContent>
       <Sc.RightContent>
         <StyledCard>
-          <Sc.SubTittle
-            size="medium"
-            color="purple"
-          >
+          <Sc.SubTittle size="medium" color="purple">
             Login
           </Sc.SubTittle>
-          <Form
-            onSubmit={handleSubmit(handleData, handleError)}
-          >
+          <Form onSubmit={handleSubmit(handleData, handleError)}>
             <Sc.Input
               type="text"
               label="E-mail"
@@ -103,23 +97,13 @@ export function Login() {
               control={control}
               placeholder={errors.senha && errors.senha.message}
             />
-            {isLoading
-              ? (
-                <Loading
-                  type="spin"
-                  color="#fff"
-                  size="6.5%"
-                  spacer="large"
-                />
-              ) : (
-                <Sc.Button
-                  type="submit"
-                  size="small"
-                >
-                  Entrar
-                </Sc.Button>
-              )
-            }
+            {isLoading ? (
+              <Loading type="spin" color="#fff" size="6.5%" spacer="large" />
+            ) : (
+              <Sc.Button type="submit" size="small">
+                Entrar
+              </Sc.Button>
+            )}
           </Form>
         </StyledCard>
       </Sc.RightContent>

@@ -8,16 +8,17 @@ import { useQuery, useQueryClient } from "react-query"
 import { transformQueryParams } from "../../utils/transformQueryParams"
 import { useState } from "react"
 
-export function Table({
-  handleSignOut,
-  filters
-}) {
+export function Table({ handleSignOut, filters }) {
   const queryClient = useQueryClient()
-  const [auth,] = useAuth()
+  const [auth] = useAuth()
   const [isAsc, setIsAsc] = useState(true)
   const queryParams = transformQueryParams(filters)
 
-  const { data: response, isSuccess, isError } = useQuery(
+  const {
+    data: response,
+    isSuccess,
+    isError,
+  } = useQuery(
     ["transactions", auth.token, queryParams],
     () => {
       return api.transactions(auth.token, queryParams)
@@ -43,7 +44,7 @@ export function Table({
 
           return {
             ...oldValue,
-            data: ascendingTransactions
+            data: ascendingTransactions,
           }
         }
       )
@@ -58,7 +59,7 @@ export function Table({
         })
         return {
           ...oldValue,
-          data: descendingTransactions
+          data: descendingTransactions,
         }
       }
     )
@@ -78,13 +79,10 @@ export function Table({
                   id={transaction.id}
                   date={transaction.data}
                   type={transaction.tipo}
-                  dayOfWeek={
-                    new Date(transaction.data)
-                      .toLocaleDateString(
-                        "pt-Br",
-                        { weekday: "long" }
-                      )
-                  }
+                  dayOfWeek={new Date(transaction.data).toLocaleDateString(
+                    "pt-Br",
+                    { weekday: "long" }
+                  )}
                   description={transaction.descricao}
                   category={transaction.categoria_nome}
                   value={transaction.valor}

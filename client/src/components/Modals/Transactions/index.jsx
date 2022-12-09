@@ -24,20 +24,22 @@ export function TransactionsModal({
   closeModal,
   title,
   typeQuery,
-  defaultValues
+  defaultValues,
 }) {
-  const [auth,] = useAuth()
+  const [auth] = useAuth()
   const queryClient = useQueryClient()
   const categories = queryClient.getQueryData(["categories", auth.token])
-  const [searchParamns,] = useSearchParams()
+  const [searchParamns] = useSearchParams()
   const filters = searchParamns.getAll("filtro")
   const queryParams = transformQueryParams(filters)
 
   const [btnChoice, setBtnChoice] = useState({
     entrada: defaultValues?.tipo === "entrada" ? true : false,
     saida: defaultValues
-      ? (defaultValues.tipo === "saida" ? true : false)
-      : true
+      ? defaultValues.tipo === "saida"
+        ? true
+        : false
+      : true,
   })
 
   const {
@@ -45,7 +47,7 @@ export function TransactionsModal({
     control,
     formState: { errors },
     reset,
-    resetField
+    resetField,
   } = useForm({
     defaultValues: {
       valor: defaultValues?.valor,
@@ -53,65 +55,63 @@ export function TransactionsModal({
       categoria: defaultValues?.categoria,
       descricao: defaultValues?.descricao,
     },
-    resolver: yupResolver(transactionSchema)
+    resolver: yupResolver(transactionSchema),
   })
 
-  const { isLoading, mutate } = useMutation(api[`${typeQuery}Transaction`],
-    {
-      onSuccess: (response, variable) => {
-        if (typeQuery !== "update") {
-          toast.success("Registrado")
-          queryClient.setQueryData(
-            ["transactions", auth.token, queryParams],
-            (oldValue) => {
-              oldValue.data.push(response.data)
-              return {
-                ...oldValue,
-              }
+  const { isLoading, mutate } = useMutation(api[`${typeQuery}Transaction`], {
+    onSuccess: (response, variable) => {
+      if (typeQuery !== "update") {
+        toast.success("Registrado")
+        queryClient.setQueryData(
+          ["transactions", auth.token, queryParams],
+          (oldValue) => {
+            oldValue.data.push(response.data)
+            return {
+              ...oldValue,
             }
-          )
-        } else {
-          toast.success("Atualizado")
+          }
+        )
+      } else {
+        toast.success("Atualizado")
 
-          queryClient.setQueryData(
-            ["transactions", auth.token, queryParams],
-            (oldValue) => {
-              const IndexValuaUpdate = oldValue.data.findIndex((transaction) => {
-                return transaction.id === id
-              })
-              const nameCategory = categories.data.find((category) => {
-                return category.id === variable.body.categoria_id
-              })
+        queryClient.setQueryData(
+          ["transactions", auth.token, queryParams],
+          (oldValue) => {
+            const IndexValuaUpdate = oldValue.data.findIndex((transaction) => {
+              return transaction.id === id
+            })
+            const nameCategory = categories.data.find((category) => {
+              return category.id === variable.body.categoria_id
+            })
 
-              oldValue.data[IndexValuaUpdate] = {
-                id: variable.id,
-                categoria_nome: nameCategory.descricao,
-                usuario_id: auth.usuario.id,
-                ...variable.body,
-              }
-
-              return {
-                ...oldValue,
-              }
+            oldValue.data[IndexValuaUpdate] = {
+              id: variable.id,
+              categoria_nome: nameCategory.descricao,
+              usuario_id: auth.usuario.id,
+              ...variable.body,
             }
-          )
-        }
-        queryClient.invalidateQueries(["extract", auth.token])
-        reset()
-        closeModal()
-      },
-      onError: () => {
-        if (typeQuery !== "update") {
-          toast.error("Falha no cadastro de registro")
-          return
-        }
-        toast.error("Falha na atualização de registro")
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries(["transactions", auth.token, queryParams])
+
+            return {
+              ...oldValue,
+            }
+          }
+        )
       }
-    }
-  )
+      queryClient.invalidateQueries(["extract", auth.token])
+      reset()
+      closeModal()
+    },
+    onError: () => {
+      if (typeQuery !== "update") {
+        toast.error("Falha no cadastro de registro")
+        return
+      }
+      toast.error("Falha na atualização de registro")
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["transactions", auth.token, queryParams])
+    },
+  })
 
   function handleData(data) {
     const category = categories.data.find((category) => {
@@ -123,7 +123,7 @@ export function TransactionsModal({
       descricao: data.descricao,
       valor: data.valor * 100,
       data: new Date(`${data.data}T00:00:00`),
-      categoria_id: category.id
+      categoria_id: category.id,
     }
 
     if (typeQuery === "update") {
@@ -135,14 +135,13 @@ export function TransactionsModal({
     } else {
       mutate({ token: auth.token, body })
     }
-
   }
 
   function handleError(error) {
     if (error.valor) {
       resetField("valor", {
         keepError: true,
-        defaultValue: ""
+        defaultValue: "",
       })
     }
   }
@@ -177,11 +176,7 @@ export function TransactionsModal({
           alt="Botão de fechar"
         />
         <Sc.Wrapper>
-          <Sc.SubTittle
-            size="medium"
-            color="black"
-            position="left"
-          >
+          <Sc.SubTittle size="medium" color="black" position="left">
             {title}
           </Sc.SubTittle>
           <Sc.WrapperBtn>
@@ -190,10 +185,12 @@ export function TransactionsModal({
               color="white"
               background={btnChoice.entrada ? "blue" : "gray"}
               spacer="none"
-              onClick={() => setBtnChoice({
-                entrada: true,
-                saida: false
-              })}
+              onClick={() =>
+                setBtnChoice({
+                  entrada: true,
+                  saida: false,
+                })
+              }
             >
               Entrada
             </Button>
@@ -202,17 +199,17 @@ export function TransactionsModal({
               color="white"
               background={btnChoice.saida ? "red" : "gray"}
               spacer="none"
-              onClick={() => setBtnChoice({
-                entrada: false,
-                saida: true
-              })}
+              onClick={() =>
+                setBtnChoice({
+                  entrada: false,
+                  saida: true,
+                })
+              }
             >
               Saída
             </Button>
           </Sc.WrapperBtn>
-          <Sc.StyledForm
-            onSubmit={handleSubmit(handleData, handleError)}
-          >
+          <Sc.StyledForm onSubmit={handleSubmit(handleData, handleError)}>
             <Input
               type="number"
               label="Valor"
@@ -234,7 +231,6 @@ export function TransactionsModal({
                 options={categories?.data}
                 name="categoria"
               />
-
             </Label>
             <Input
               type="date"
@@ -256,29 +252,23 @@ export function TransactionsModal({
               control={control}
               placeholder={errors.descricao && errors.descricao.message}
             />
-            {isLoading
-              ? (
-                <Loading
-                  type="spin"
-                  color="#fff"
-                  size="6.5%"
-                  width="50%"
-                />
-              ) : (
-                <Button
-                  size="small"
-                  color="white"
-                  background="purple"
-                  spacer="small"
-                  type="submit"
-                >
-                  Confirmar
-                </Button>
-              )
-            }
-          </ Sc.StyledForm>
+            {isLoading ? (
+              <Loading type="spin" color="#fff" size="6.5%" width="50%" />
+            ) : (
+              <Button
+                size="small"
+                color="white"
+                background="purple"
+                spacer="small"
+                type="submit"
+              >
+                Confirmar
+              </Button>
+            )}
+          </Sc.StyledForm>
         </Sc.Wrapper>
       </Sc.Modal>
-    </>
-    , document.getElementById("modal-root"))
+    </>,
+    document.getElementById("modal-root")
+  )
 }

@@ -1,11 +1,7 @@
-import {
-  createContext,
-  useMemo
-} from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { createContext, useMemo } from "react"
+import { useLocalStorage } from "../hooks/useLocalStorage"
 
 export const Auth = createContext(null)
-
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useLocalStorage("user", null)
@@ -14,9 +10,5 @@ export function AuthProvider({ children }) {
     return [user, setUser]
   }, [user, setUser])
 
-  return (
-    <Auth.Provider value={valueProvider}>
-      {children}
-    </Auth.Provider>
-  )
+  return <Auth.Provider value={valueProvider}>{children}</Auth.Provider>
 }

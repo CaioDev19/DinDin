@@ -12,7 +12,10 @@ import { Button } from "../../../global/styles/Button"
 import { useAuth } from "../../../hooks/useAuth"
 import * as api from "../../../services/api"
 import { Loading } from "../../Loading"
-import { handleSignUpError, signUpSchema } from "../../../utils/validators/signUp"
+import {
+  handleSignUpError,
+  signUpSchema,
+} from "../../../utils/validators/signUp"
 import { useMutation } from "react-query"
 
 export function ProfileModal({ closeModal }) {
@@ -22,48 +25,45 @@ export function ProfileModal({ closeModal }) {
     control,
     formState: { errors },
     reset,
-    resetField
+    resetField,
   } = useForm({
     defaultValues: {
       nome: auth.usuario.nome,
       email: auth.usuario.email,
       senha: "",
-      confirmacaoSenha: ""
+      confirmacaoSenha: "",
     },
-    resolver: yupResolver(signUpSchema)
+    resolver: yupResolver(signUpSchema),
   })
 
-  const { isLoading, mutate } = useMutation(
-    api.updateUser,
-    {
-      onSuccess: (_, variables) => {
-        toast.success("Atualização realizada com sucesso!")
+  const { isLoading, mutate } = useMutation(api.updateUser, {
+    onSuccess: (_, variables) => {
+      toast.success("Atualização realizada com sucesso!")
 
-        setAuht({
-          token: auth.token,
-          usuario: {
-            id: auth.usuario.id,
-            nome: variables.body.nome,
-            email: variables.body.email
-          }
-        })
-        reset()
-        closeModal()
-      },
-      onError: (error) => {
-        toast.error(error.response.data.mensagem)
-      }
-    }
-  )
+      setAuht({
+        token: auth.token,
+        usuario: {
+          id: auth.usuario.id,
+          nome: variables.body.nome,
+          email: variables.body.email,
+        },
+      })
+      reset()
+      closeModal()
+    },
+    onError: (error) => {
+      toast.error(error.response.data.mensagem)
+    },
+  })
 
   function handleData(data) {
     mutate({
       body: {
         nome: data.nome,
         email: data.email,
-        senha: data.senha
+        senha: data.senha,
       },
-      token: auth.token
+      token: auth.token,
     })
   }
 
@@ -71,7 +71,7 @@ export function ProfileModal({ closeModal }) {
     if (error.email?.type === "email") {
       resetField("email", {
         keepError: true,
-        defaultValue: ""
+        defaultValue: "",
       })
     }
     handleSignUpError(error, resetField)
@@ -108,16 +108,10 @@ export function ProfileModal({ closeModal }) {
           onClick={closeModal}
         />
         <Sc.Wrapper>
-          <Sc.SubTittle
-            size="medium"
-            color="black"
-            position="left"
-          >
+          <Sc.SubTittle size="medium" color="black" position="left">
             Editar Perfil
           </Sc.SubTittle>
-          <Sc.StyledForm
-            onSubmit={handleSubmit(handleData, handleError)}
-          >
+          <Sc.StyledForm onSubmit={handleSubmit(handleData, handleError)}>
             <Input
               type="text"
               label="Nome"
@@ -156,31 +150,27 @@ export function ProfileModal({ closeModal }) {
               labelWeight="700"
               name="confimacaoSenha"
               control={control}
-              placeholder={errors.confimacaoSenha && errors.confimacaoSenha.message}
+              placeholder={
+                errors.confimacaoSenha && errors.confimacaoSenha.message
+              }
             />
-            {isLoading
-              ? (
-                <Loading
-                  type="spin"
-                  color="#fff"
-                  size="6.5%"
-                  width="50%"
-                />
-              ) : (
-                <Button
-                  size="small"
-                  color="white"
-                  background="purple"
-                  spacer="small"
-                  type="submit"
-                >
-                  Confirmar
-                </Button>
-              )
-            }
-          </ Sc.StyledForm>
+            {isLoading ? (
+              <Loading type="spin" color="#fff" size="6.5%" width="50%" />
+            ) : (
+              <Button
+                size="small"
+                color="white"
+                background="purple"
+                spacer="small"
+                type="submit"
+              >
+                Confirmar
+              </Button>
+            )}
+          </Sc.StyledForm>
         </Sc.Wrapper>
       </Sc.Modal>
-    </>
-    , document.getElementById("modal-root"))
+    </>,
+    document.getElementById("modal-root")
+  )
 }

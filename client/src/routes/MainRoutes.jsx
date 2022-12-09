@@ -38,4 +38,4 @@ export function MainRoutes() {
       </Routes>
     </AnimatePresence>
   )
-} 
+}
