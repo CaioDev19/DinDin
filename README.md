@@ -4,16 +4,34 @@
 # Dindin - Aplicação para controle financeiro pessoal
 Projeto feito para a conclusão do módulo 03 do Curso de Desenvolvimento de Software da Cubos Academy.
 
-OBS: Não foi aplicado responsividade ainda no projeto, pois não foi exigido para a conclusão do módulo, porém, em breve, será adaptado à responsividade.
+OBS: App responsivo.
 
 ## Tecnologias
 
+#Front end 
+
 - ReactJS
-  - React-router-dom
+  - React-router-dom,
+  - Framer-motion
   - React-toastify
-- NodeJS
+  - Reac-hook-forms
+  - React query
+  - yup
+  - Syled-components
   - Axios
   - Date-fns
+  
+#Back end
+
+- NodeJS
+  -Bycrypt
+  -Cors
+  -Dotenv
+  -Express
+  -JsonWebToken
+  -knex
+  -pg
+  -yup
   
  ## Features
  
@@ -27,23 +45,12 @@ OBS: Não foi aplicado responsividade ainda no projeto, pois não foi exigido pa
  - Ordenar as transações feitas por data
  - Fazer o Logout do Usuário
 
-## Links
-- Deploy Netlify (acesse o programa por aqui): https://dindin-front.netlify.app
-- Repositório: https://github.com/lanziotti/dindin-front
-
 ## Contatos
-- Email: rodrigolanziotti@yahoo.com.br  
-- LinkedIn: https://www.linkedin.com/in/rodrigo-lanziotti-16a64966/
-
-## Versão
-1.0.0
+- Email: caiooliveira9.co@gmail.com  
+- LinkedIn: [https://www.linkedin.com/in/rodrigo-lanziotti-16a64966/](https://www.linkedin.com/in/caio-araújo-416815243/)
 
 ## Autor
-**Rodrigo Lanziotti de Freitas**
+**Caio Oliveira de Araújo**
 
 ##
 
-
-Obrigado por visitar meu repositório...😎
-
-...fique a vontade para entrar em contato quando quiser! 😉
