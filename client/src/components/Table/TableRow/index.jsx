@@ -14,6 +14,7 @@ import { useAuth } from "../../../hooks/useAuth"
 import { useSearchParams } from "react-router-dom"
 import { transformQueryParams } from "../../../utils/transformQueryParams"
 import { centsToReais } from "../../../utils/centsToReais"
+import { useIsAsc } from "../../../hooks/useIsAsc"
 
 export function TableRow({
   id,
@@ -26,9 +27,11 @@ export function TableRow({
 }) {
   const [isPopUpOpen, setIsPopUpOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [, setIsAsc] = useIsAsc()
   const queryClient = useQueryClient()
   const [auth] = useAuth()
   const [searchParamns] = useSearchParams()
+
   const filters = searchParamns.getAll("filtro")
   const queryParams = transformQueryParams(filters)
 
@@ -46,6 +49,7 @@ export function TableRow({
           const filteredData = oldValue.data.filter((transaction) => {
             return transaction.id !== id
           })
+
           return {
             ...oldValue,
             data: filteredData,
@@ -58,6 +62,7 @@ export function TableRow({
     onSuccess: () => {
       queryClient.invalidateQueries(["extract", auth.token])
       setIsPopUpOpen(false)
+      setIsAsc(true)
     },
     onError: (error, data, context) => {
       queryClient.setQueryData(

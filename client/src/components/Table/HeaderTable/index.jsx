@@ -1,8 +1,47 @@
 import * as Sc from "./style"
 import arrowUp from "../../../assets/images/arrowKeyUp.svg"
 import { motion } from "framer-motion"
+import { useIsAsc } from "../../../hooks/useIsAsc"
+import { useQueryClient } from "react-query"
+import { useAuth } from "../../../hooks/useAuth"
 
-export function HeaderTable({ handleSort, isAsc }) {
+export function HeaderTable({ queryParams }) {
+  const [isAsc, setIsAsc] = useIsAsc()
+  const queryClient = useQueryClient()
+  const [auth] = useAuth()
+
+  function handleSort() {
+    if (!isAsc) {
+      queryClient.setQueryData(
+        ["transactions", auth.token, queryParams],
+        (oldValue) => {
+          const ascendingTransactions = oldValue.data.sort((a, b) => {
+            return new Date(a.data) - new Date(b.data)
+          })
+
+          return {
+            ...oldValue,
+            data: ascendingTransactions,
+          }
+        }
+      )
+      setIsAsc(true)
+      return
+    }
+    queryClient.setQueryData(
+      ["transactions", auth.token, queryParams],
+      (oldValue) => {
+        const descendingTransactions = oldValue.data.sort((a, b) => {
+          return new Date(b.data) - new Date(a.data)
+        })
+        return {
+          ...oldValue,
+          data: descendingTransactions,
+        }
+      }
+    )
+    setIsAsc(false)
+  }
   return (
     <Sc.HeaderTable>
       <tr>

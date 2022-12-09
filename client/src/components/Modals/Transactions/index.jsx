@@ -101,7 +101,8 @@ export function TransactionsModal({
       reset()
       closeModal()
     },
-    onError: () => {
+    onError: (error) => {
+      console.log(error)
       if (typeQuery !== "update") {
         toast.error("Falha no cadastro de registro")
         return
@@ -122,7 +123,7 @@ export function TransactionsModal({
       tipo: btnChoice.entrada ? "entrada" : "saida",
       descricao: data.descricao,
       valor: data.valor * 100,
-      data: new Date(`${data.data}T00:00:00`),
+      data: new Date(`${data.data} 00:00:00`).toLocaleDateString("pt-br"),
       categoria_id: category.id,
     }
 
