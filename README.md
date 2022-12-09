@@ -45,8 +45,8 @@ OBS: App responsivo.
  - Fazer o Logout do Usuário
 
 ## Contatos
-- Email: [caiooliveira9.co@gmail.com]  
-- LinkedIn: [https://www.linkedin.com/in/caio-araújo-416815243/]
+- Email: caiooliveira9.co@gmail.com
+- LinkedIn: https://www.linkedin.com/in/caio-araújo-416815243/
 
 ## Autor
 **Caio Oliveira de Araújo**
