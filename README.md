@@ -8,7 +8,7 @@ OBS: App responsivo.
 
 ## Tecnologias
 
-#Front end 
+##Front end 
 
 - ReactJS
   - React-router-dom,
@@ -21,17 +21,17 @@ OBS: App responsivo.
   - Axios
   - Date-fns
   
-#Back end
+##Back end
 
 - NodeJS
-  -Bycrypt
-  -Cors
-  -Dotenv
-  -Express
-  -JsonWebToken
-  -knex
-  -pg
-  -yup
+  - Bycrypt
+  - Cors
+  - Dotenv
+  - Express
+  - JsonWebToken
+  - knex
+  - pg
+  - yup
   
  ## Features
  
