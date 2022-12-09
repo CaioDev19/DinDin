@@ -1,5 +1,5 @@
 # DinDin
-![Logo do projeto](https://github.com/lanziotti/dindin-front/blob/master/public/Logo%20Projeto.png)
+![Logo do projeto](https://github.com/CaioDev19/DinDin/blob/main/client/src/assets/images/logo.svg)
 
 # Dindin - Aplicação para controle financeiro pessoal
 Projeto feito para a conclusão do módulo 03 do Curso de Desenvolvimento de Software da Cubos Academy.
@@ -8,7 +8,7 @@ OBS: App responsivo.
 
 ## Tecnologias
 
-## Front end 
+# Front end 
 
 - ReactJS
   - React-router-dom,
@@ -21,7 +21,7 @@ OBS: App responsivo.
   - Axios
   - Date-fns
   
-## Back end
+# Back end
 
 - NodeJS
   - Bycrypt
