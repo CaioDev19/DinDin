@@ -14,7 +14,7 @@ CREATE TABLE transacoes(
 	id SERIAL PRIMARY KEY,
   descricao TEXT NOT NULL,
   valor BIGINT CHECK(valor > 0) NOT NULL,
-  data TIMESTAMP DEFAULT NOW(),
+  data DATE DEFAULT NOW(),
   categoria_id INT NOT NULL,
   usuario_id INT NOT NULL,
   tipo VARCHAR(50),
