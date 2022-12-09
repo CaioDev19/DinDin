@@ -1,20 +1,6 @@
-const { checkIfFieldsWereSent } = require("../utils/body")
 const { isInTheDataBase } = require("../utils/db")
 
 module.exports = {
-  checkRegisterBody(req, res, next) {
-    const jsonResponse = checkIfFieldsWereSent(
-      req.body,
-      ["descricao", "valor", "data", "categoria_id", "tipo"],
-      res
-    )
-
-    if (jsonResponse) {
-      return jsonResponse
-    }
-
-    next()
-  },
   async checkIfCategorieExists(req, res, next) {
     const { categoria_id } = req.body
 

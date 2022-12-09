@@ -1,34 +1,7 @@
 const { isInTheDataBase } = require("../utils/db")
-const { checkIfFieldsWereSent } = require("../utils/body")
 const bycript = require("bcrypt")
 
 module.exports = {
-  checkIfSignUpBodyIsRight(req, res, next) {
-    const jsonResponse = checkIfFieldsWereSent(
-      req.body,
-      ["nome", "email", "senha"],
-      res
-    )
-
-    if (jsonResponse) {
-      return jsonResponse
-    }
-
-    next()
-  },
-  checkLoginBodyIsRight(req, res, next) {
-    const jsonResponse = checkIfFieldsWereSent(
-      req.body,
-      ["email", "senha"],
-      res
-    )
-
-    if (jsonResponse) {
-      return jsonResponse
-    }
-
-    next()
-  },
   async checkIfEmailExists(req, res, next) {
     const { nome, email } = req.body
 

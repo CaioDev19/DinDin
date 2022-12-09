@@ -8,19 +8,20 @@ const {
   showBalance,
 } = require("../controllers/transactions")
 const {
-  checkRegisterBody,
   checkIfCategorieExists,
   checkTypeOfRegister,
   checkIfTransactionExists,
   checkIfTransactioBelongsToUser,
 } = require("../middlewares/transactions")
+const { validade } = require("../middlewares/validate")
+const { transactionSchema } = require("../validators/transactionSchema")
 const router = express.Router()
 
 router
   .route("/")
   .get(listAllTransactions)
   .post(
-    checkRegisterBody,
+    validade(transactionSchema),
     checkIfCategorieExists,
     checkTypeOfRegister,
     registerTransaction
@@ -37,7 +38,7 @@ router
   )
   .put(
     checkIfTransactionExists,
-    checkRegisterBody,
+    validade(transactionSchema),
     checkIfTransactioBelongsToUser,
     checkIfCategorieExists,
     checkTypeOfRegister,
