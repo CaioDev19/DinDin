@@ -1,6 +1,6 @@
 ![Logo do projeto](https://github.com/CaioDev19/DinDin/blob/main/client/src/assets/images/logo.svg)
 
-# Dindin - Aplicação para controle financeiro pessoal
+# Dindin - Aplicação para controle financeiro
 Projeto feito para a conclusão do módulo 03 do Curso de Desenvolvimento de Software da Cubos Academy.
 
 OBS: App responsivo.
