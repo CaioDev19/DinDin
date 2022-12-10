@@ -93,7 +93,20 @@ export function TableRow({
         exit={{ opacity: 0 }}
       >
         <Sc.TableItem as="td" size="small" weight="bold" position="left">
-          {format(new Date(date), "dd/MM/yy")}
+          {date.includes("/")
+            ? new Date(date.split("/").reverse().join("/")).toLocaleDateString(
+                "pt-br",
+                {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "2-digit",
+                }
+              )
+            : new Date(date).toLocaleDateString("pt-br", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "2-digit",
+              })}
         </Sc.TableItem>
         <Sc.TableItem as="td" size="small">
           {dayOfWeek}
@@ -165,7 +178,12 @@ export function TableRow({
             typeQuery="update"
             defaultValues={{
               valor: value / 100,
-              data: format(new Date(date), "yyyy-MM-dd"),
+              data: date.includes("/")
+                ? format(
+                    new Date(date.split("/").reverse().join("/")),
+                    "yyyy-MM-dd"
+                  )
+                : format(new Date(date), "yyyy-MM-dd"),
               categoria: category,
               descricao: description,
               tipo: type,
