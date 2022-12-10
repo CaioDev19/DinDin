@@ -65,8 +65,6 @@ Ao clicar no referido botão, um modal com a opção de adicionar informações 
 
 ---
 
-# Pessoa B
-
 ### Editar uma transação:
 
 Para editar uma transação o usuário deverá clicar no ícone do lápis, que se encontrará na tabela de listagem de transações:
@@ -80,8 +78,6 @@ Ao clicar no ícone de editar uma transação, o modal para edição do registro
 ![](https://i.imgur.com/UGQ9uda.png)
 
 ---
-
-# Pessoa B
 
 ### Excluir uma transação:
 
