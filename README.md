@@ -2,7 +2,7 @@
 
 # Dindin - Aplicação para controle financeiro
 
-Controle suas finanças, sem planilha chata.Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você tem tudo num único lugar e em um clique de distância.
+Controle suas finanças, sem planilha chata. Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você tem tudo num único lugar e em um clique de distância.
 
 ## Tecnologias
 
