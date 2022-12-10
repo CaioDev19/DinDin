@@ -2,7 +2,7 @@
 
 # Api Dindin - Aplicação para controle financeiro
 
-## Features:
+## Features
 
 - Cadastrar Usuário
 - Fazer Login

@@ -2,9 +2,7 @@
 
 # Dindin - Aplicação para controle financeiro
 
-Projeto feito para a conclusão do módulo 03 do Curso de Desenvolvimento de Software da Cubos Academy.
-
-OBS: App responsivo.
+Controle suas finanças, sem planilha chata.Organizar as suas finanças nunca foi tão fácil, com o DINDIN, você tem tudo num único lugar e em um clique de distância.
 
 ## Tecnologias
 
