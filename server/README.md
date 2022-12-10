@@ -427,8 +427,6 @@ Essa é a rota que será chamada quando o usuario logado quiser atualizar uma da
 
 ---
 
-# Pessoa B
-
 ### **Excluir transação do usuário logado**
 
 #### `DELETE` `/transacao/:id`
@@ -461,8 +459,6 @@ Essa é a rota que será chamada quando o usuario logado quiser excluir uma das 
 ```
 
 ---
-
-# Pessoa A
 
 ### **Obter extrato de transações**
 
